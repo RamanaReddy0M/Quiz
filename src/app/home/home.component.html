@@ -1,0 +1,21 @@
+<div class = "container shadow p-3 mb-5 bg-body rounded" 
+    style = "
+    max-width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);">
+
+    <div class="row m-2 mx-auto  justify-content-center">
+        <div class="col-sm-12 ">
+                <p class="text-center" style="color: green;"><span class="border-bottom border-success fs-2 fst-italic fw-bold">HomeCrop</span></p>
+        </div>
+        <div class="col-sm-6 m-2"> 
+            <input type="text" class="form-control fs-5 fst-italic" #name placeholder="Enter your name">
+        </div>
+        <div class="col-sm-3 m-2">
+             <button class="btn btn-primary fs-5 fst-italic" routerLink="/quiz" (click)="startQuiz()">Start Quiz</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,99 @@
+{
+    "questions":[
+        {
+            "description": " Chose the Single correct answer",
+            "type": "single",
+            "question": "The smallest unit of matter that can exist independently is",
+             "options":[
+                 {
+                     "text": "(a) atom",
+                     "isCorrect": false
+                 },
+                 {
+                    "text": "(b) molecule",
+                    "isCorrect": false
+                },
+                {
+                    "text": "(c) ion",
+                    "isCorrect": true
+                },
+                {
+                    "text": "(d) radical",
+                    "isCorrect": false
+                }
+             ]
+        },
+        {
+            "description": " Chose the Multiple correct answers and click next",
+            "type": "multiple",
+            "question": "Inside an atom there are",
+             "options":[
+                 {
+                     "text": "(a) electrons",
+                     "isCorrect": true
+                 },
+                 {
+                    "text": "(b) protons",
+                    "isCorrect": true
+                },
+                {
+                    "text": "(c) neutrons",
+                    "isCorrect": true
+                },
+                {
+                    "text": "(d) molecules",
+                    "isCorrect": false
+                }
+             ]
+        },
+        {
+            "description": "Drop Down Option for correct answers",
+            "type": "drop-down",
+            "question": "The charge on an electron is ____ and the charge on a proton is ____",
+             "options":[
+                "positive", "negative", "neutral"
+             ],
+             "answers":[
+                 "negative", "positive"
+             ]
+        },
+        {
+            "description":"Fill in the blanks with case sensitive correct answers",
+            "type": "case-sensitive",
+            "question":"The SI unit of length, metre, is denoted by ____and the SI unit of electric current, ampere, is denoted by ____",
+            "answers": ["m", "A"]
+        },
+        {
+            "description": "Fill in the blanks with correct answers ( not Case sensitive )",
+            "type": "case-insensitive",
+            "question":"A hundredth of a metre is a ____",
+            "answers":["centimetre or centimeter"]
+        },
+        {
+            "description": "Select True/ False of the given sentence .",
+            "type": "TrueOrFalse",
+            "question":"Mass and energy are interconvertible",
+            "options":[
+                {
+                    "text": "TRUE",
+                    "isCorrect": true
+                },
+                {
+                   "text": "FALSE",
+                   "isCorrect": false
+               },
+               {
+                   "text": "CAN'T BE DETERMINED",
+                   "isCorrect": false
+               }
+            ]
+        },
+        {
+            "description": "Drag the below answers and fill the blanks .",
+            "type": "drap-and-drop",
+            "question": "If the side of a square is 5 cm, its area is ____, perimeter is ____and the length of the diagonal is ____",
+            "options":[],
+            "answers":[]
+        }
+    ]
+}

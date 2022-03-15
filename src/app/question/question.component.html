@@ -1,0 +1,174 @@
+<div class="container border" #endTest>
+    <div class="d-flex flex-row-reverse ">
+        <div class="col-sm-3 m-1 p-1 bg-success text-white border-radius-0">
+            <h5 class="text-center"><i class="bi bi-chevron-double-right"></i> <i> {{name}}</i> </h5>
+        </div>
+    </div>
+    <div class="row m-1 p-2 ">
+        <span class="text-center fs-5 fw-bold">{{currentQuestion+1}} of {{questions.length}}</span>
+    </div>
+    <!-- question loop -->
+    <div class="row  m-1 py-4" 
+         style="box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;">
+
+          <!-- for single correct option -->
+          <div *ngIf="questions[currentQuestion]?.type == 'single' || questions[currentQuestion]?.type == 'TrueOrFalse'">
+            <div class="col-sm-12 border p-3 m-1">
+                <span class="fs-6">{{questions[currentQuestion]?.description}}</span>
+                <p class="fs-5 p-1"><span class="fw-bold">Q{{currentQuestion+1}}) </span>{{questions[currentQuestion]?.question}}</p>
+            </div>
+            <div class="col-sm-12 p-3 m-1" *ngFor="let option of questions[currentQuestion]?.options">
+                <span class="fs-5 p-2">{{option.text}}</span>
+                <button class="border p-2 btn" style="width: 20px; height:20px;"
+                  appCheckSingleOption [isCorrect] = "option.isCorrect"
+                  (click)="checkIsWrongOfSingle(option.isCorrect)"
+                 ></button>
+            </div>
+          </div>
+          <!-- single end -->
+
+          <!-- for multiple options -->
+            <div *ngIf="questions[currentQuestion]?.type == 'multiple'">
+                <div class="col-sm-12 border p-3 m-1">
+                    <span class="fs-6">{{questions[currentQuestion]?.description}}</span>
+                    <p class="fs-5 p-1"><span class="fw-bold">Q{{currentQuestion+1}}) </span>{{questions[currentQuestion]?.question}}</p>
+                </div>
+                <div class="col-sm-12 p-3 m-1" *ngFor="let option of questions[currentQuestion]?.options">
+                    <span class="fs-5 p-2">{{option.text}}</span>
+                    <button class="border p-2 btn" style="width: 20px; height:20px;"
+                      appCheckSingleOption [isCorrect]="option.isCorrect"
+                      (click)="checkIsWrongOfMultiple(option.isCorrect, questions[currentQuestion]?.options)"
+                     ></button>
+                </div>
+            </div>
+            <!-- multiple end -->
+
+            <!-- for drop-down type-->
+            <div *ngIf="questions[currentQuestion]?.type == 'drop-down'">
+                <div class="col-sm-12 border p-3 m-1">
+
+                    <span class="fs-6">{{questions[currentQuestion]?.description}}</span>
+
+                    <p class="fs-5 p-1">
+                        <span class="fw-bold">Q{{currentQuestion+1}}) </span>
+                        <span *ngFor="let str of getList(questions[currentQuestion]?.question); let i = index">
+                            <span *ngIf="str != '' ">
+                            {{str}}
+                            <select class="fs-4 p-2 fst-italic" name="" id="" #selected
+                               (change)="checkAnswerForDropDown($event.target.value, questions[currentQuestion]?.answers[i], i)"
+                               style="border: none;outline: none; border-bottom: 1px solid rgba(0, 0, 0, 0.3)"
+                               >
+                                <option class=" p-5 fs-5 fst-italic" disabled selected>Select</option>
+                                <option 
+                                class="p-2 fs-5 fst-italic"
+                                *ngFor="let option of questions[currentQuestion]?.options"
+                                >
+                                {{option}}
+                               </option>
+                             </select>
+                           </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- drop-down type end -->
+
+            <!-- for case sensitive type -->
+            <div *ngIf="questions[currentQuestion]?.type == 'case-sensitive'">
+                <div class="col-sm-12 border p-3 m-1">
+
+                    <span class="fs-6">{{questions[currentQuestion]?.description}}</span>
+
+                    <p class="fs-5 p-1">
+                        <span class="fw-bold">Q{{currentQuestion+1}}) </span>
+                        <span *ngFor="let str of getList(questions[currentQuestion]?.question); let i = index">
+                            <span *ngIf="str != '' ">
+                            {{str}}
+                            <input type="text p-2 m-2" class="fs-4 " #caseSensitive
+                            style="border: none;outline: none;border-bottom: 1px solid rgba(50, 50, 93, 0.25);text-align: center;" 
+                            (change)="checkAnswerForCaseSensitive($event.target.value, questions[currentQuestion]?.answers[i], i)"
+                            >
+                           </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- case sensitive end -->
+
+            <!-- for case insensitive type -->
+            <div *ngIf="questions[currentQuestion]?.type == 'case-insensitive'">
+                <div class="col-sm-12 border p-3 m-1">
+
+                    <span class="fs-6">{{questions[currentQuestion]?.description}}</span>
+
+                    <p class="fs-5 p-1">
+                        <span class="fw-bold">Q{{currentQuestion+1}}) </span>
+                        <span *ngFor="let str of getList(questions[currentQuestion]?.question); let i = index">
+                            <span *ngIf="str != '' ">
+                            {{str}}
+                            <input type="text p-2 m-2" class="fs-4 " #caseInsensitive
+                            style="border: none;outline: none;border-bottom: 1px solid rgba(50, 50, 93, 0.25);text-align: center;" 
+                            (change)="checkAnswerForCaseInsensitive($event.target.value, questions[currentQuestion]?.answers[i], i)"
+                            >
+                           </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- case insensitive end -->
+
+
+            <!-- Try Again prompt -->
+            <div *ngIf="isWrong"  class="row p-3 m-1 justify-content-start">
+                <span class="col-sm-2 text-center p-2 fw-bold fst-italic bg-success text-light">Try Again</span>
+            </div>
+        </div>
+        <!-- question row end -->
+
+
+        <!-- next and previous question -->
+        <div class="d-flex justify-content-around p-3">
+            <button class="btn btn-success fs-4 px-4 fw-bold border-radius-0"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;"
+                    (click)="previous()" [disabled]="disablePrevious"
+                    ><i class="bi bi-chevron-left"></i><i>Prev</i></button>
+            <button *ngIf="currentQuestion < questions.length-1"
+                    class="btn btn-success fs-4 px-4 fw-bold"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;"                    
+                     (click)="next()" [disabled]="disableNext"
+                    ><i>Next</i><i class="bi bi-chevron-right"></i></button>
+            <button *ngIf="currentQuestion == questions.length-1" class="btn btn-success fs-4 px-4 fw-bold"
+                    style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;"                    
+                    (click)="next()"
+                    ><i>Submit</i></button>
+        </div>
+    </div>
+
+    <div *ngIf="isSubmitted" class = "container shadow p-3 mb-5 bg-body rounded" 
+            style = "
+            max-width: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -80%);">
+
+    <div class="row m-2 mx-auto  justify-content-center">
+
+        <div class="col-sm-12 ">
+             <h1 class="text-center bi bi-check2-circle" style="color: green;"></h1>
+        </div>
+
+        <div class="col-sm-12">
+            <p class="fw-bold fst-italic fs-2 text-center">Quiz submitted successfully!</p>
+            <p class="fs-4 fw-bold fst-italic text-center">Score is <span>{{score.toFixed(2)}} out of {{questions.length}}.00</span></p>
+        </div>
+
+        <div class="col-sm-12 m-2">
+            <div class="text-center">
+                <button class="text-center btn btn-success px-4 fw-bold fst-italic" routerLink="/home">Home</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
